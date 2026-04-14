@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const seasons = [
@@ -22,25 +23,27 @@ export default function BackgroundSlideshow() {
     return () => clearInterval(timer);
   }, []);
 
-  // Only render the current slide and the next one to avoid loading all images at once.
-  // This is critical for mobile: loading all 4 large PNGs simultaneously causes OOM crashes.
-  const next = (current + 1) % seasons.length;
-  const loaded = new Set([current, next]);
-
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
       {seasons.map((src, i) => (
-        loaded.has(i) ? (
-          <div
-            key={src}
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('${src}')`,
-              opacity: i === current ? 1 : 0,
-              transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-            }}
+        <div
+          key={src}
+          className="absolute inset-0"
+          style={{
+            opacity: i === current ? 1 : 0,
+            transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+          }}
+        >
+          <Image
+            src={src}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority={i === 0}
+            quality={60}
           />
-        ) : null
+        </div>
       ))}
 
       {/* Overlay for text readability */}
