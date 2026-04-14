@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Project } from "@/lib/projects";
+import type { Project } from "@/lib/project";
 
 /* ── Mini bar chart for impact stats ───────────────────────────── */
 function ImpactChart({ insights }: { insights: Project["insights"] }) {
