@@ -15,61 +15,55 @@ const FADE_DURATION = 3000; // 3s crossfade
 
 export default function BackgroundSlideshow() {
   const [current, setCurrent] = useState(0);
-  const [prev, setPrev] = useState<number | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
+  // Detect screen size in JS — CSS hidden still loads images via <link rel="preload">
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((c) => {
-        setPrev(c);
-        return (c + 1) % seasons.length;
-      });
-    }, INTERVAL);
-    return () => clearInterval(timer);
+    const mq = window.matchMedia("(min-width: 768px)");
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Clear prev from DOM after fade completes so it's not holding memory
+  // Only run the timer on desktop
   useEffect(() => {
-    if (prev === null) return;
-    const t = setTimeout(() => setPrev(null), FADE_DURATION + 100);
-    return () => clearTimeout(t);
-  }, [prev]);
+    if (!isDesktop) return;
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % seasons.length);
+    }, INTERVAL);
+    return () => clearInterval(timer);
+  }, [isDesktop]);
 
+  // Mobile: plain background, zero images loaded, zero GPU layers
+  if (!isDesktop) {
+    return <div className="fixed inset-0 -z-10 bg-cream" />;
+  }
+
+  // Desktop: full crossfading slideshow
+  // Stable keys (key={i}) so React reuses the same element — opacity transition fires correctly
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden hidden md:block">
-      {/* Previous image fades out */}
-      {prev !== null && (
+    <div className="fixed inset-0 -z-10 overflow-hidden">
+      {seasons.map((src, i) => (
         <div
-          key={`prev-${prev}`}
+          key={i}
           className="absolute inset-0"
-          style={{ opacity: 0, transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)` }}
+          style={{
+            opacity: i === current ? 1 : 0,
+            transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+          }}
         >
           <Image
-            src={seasons[prev]}
+            src={src}
             alt=""
             fill
             sizes="100vw"
             className="object-cover object-center"
+            priority={i === 0}
             quality={55}
           />
         </div>
-      )}
-
-      {/* Current image fades in */}
-      <div
-        key={`curr-${current}`}
-        className="absolute inset-0"
-        style={{ opacity: 1, transition: `opacity ${FADE_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)` }}
-      >
-        <Image
-          src={seasons[current]}
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center"
-          priority={current === 0}
-          quality={55}
-        />
-      </div>
+      ))}
 
       {/* Overlay for text readability */}
       <div className="absolute inset-0 bg-cream/90" />
