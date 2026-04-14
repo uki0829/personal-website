@@ -11,7 +11,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-center px-6 pt-16">
+    <section className="min-h-[100dvh] flex flex-col justify-center px-6 pt-16">
       <div className="max-w-5xl mx-auto w-full">
 
         {/* Role tag */}
