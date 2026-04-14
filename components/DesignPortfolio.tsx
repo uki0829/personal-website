@@ -80,14 +80,15 @@ export default function DesignPortfolio() {
               rel="noopener noreferrer"
               className="group block relative border border-ink/10 overflow-hidden"
             >
-              <Image
-                src={COVER_PATH}
-                alt="Design Portfolio Cover"
-                width={1200}
-                height={800}
-                sizes="(max-width: 640px) 100vw, 50vw"
-                className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
+              <div className="relative aspect-[5/3]">
+                <Image
+                  src={COVER_PATH}
+                  alt="Design Portfolio Cover"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+              </div>
               <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
                 <span
                   className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -111,13 +112,15 @@ export default function DesignPortfolio() {
               onClick={() => setVideoOpen(true)}
               className="group relative w-full border border-ink/10 overflow-hidden block"
             >
-              <Image
-                src={VIDEO_COVER}
-                alt="Screen Recording Cover"
-                width={1200}
-                height={800}
-                className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
+              <div className="relative aspect-[5/3]">
+                <Image
+                  src={VIDEO_COVER}
+                  alt="Screen Recording Cover"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+              </div>
               <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
                 <span
                   className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300"
