@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Zhang Hefeng — Data Analyst & Product Scientist",
+  title: "Hefeng Zhang | Portfolio",
   description:
-    "Student at Cornell University bridging human-centered design and data analysis. Specializing in product analytics, ML, and data-driven decision making.",
+    "I'm Hefeng Zhang. My work focuses on bridging human-centered design with data analysis. I am currently pursuing a master’s degree in Information Science @ Cornell University.",
   keywords: [
     "data analyst", "product analyst", "data scientist", "machine learning",
     "Python", "SQL", "A/B testing", "behavioral analytics", "Cornell", "Parsons",
@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     apple: "/images/icon.jpg",
   },
   openGraph: {
-    title: "Zhang Hefeng — Data Analyst & Product Scientist",
+    title: "Hefeng Zhang | Portfolio",
     description: "Let design guide our intuition, and data shape our decisions.",
     type: "website",
-    images: [{ url: "/images/icon.jpg", width: 1200, height: 630, alt: "Zhang Hefeng — Data Analyst & Product Scientist" }],
+    images: [{ url: "/images/icon.jpg", width: 1200, height: 630, alt: "Hefeng Zhang | Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zhang Hefeng — Data Analyst & Product Scientist",
+    title: "Hefeng Zhang | Portfolio",
     description: "Let design guide our intuition, and data shape our decisions.",
     images: ["/images/icon.jpg"],
   },
