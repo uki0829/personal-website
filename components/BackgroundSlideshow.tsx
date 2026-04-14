@@ -35,9 +35,21 @@ export default function BackgroundSlideshow() {
     return () => clearInterval(timer);
   }, [isDesktop]);
 
-  // Mobile: plain background, zero images loaded, zero GPU layers
+  // Mobile: static spring image only, no slideshow
   if (!isDesktop) {
-    return <div className="fixed inset-0 -z-10 bg-cream" />;
+    return (
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <Image
+          src="/images/spring.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+          quality={55}
+        />
+        <div className="absolute inset-0 bg-cream/90" />
+      </div>
+    );
   }
 
   // Desktop: full crossfading slideshow
