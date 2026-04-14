@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const PDF_PATH = "/portfolio/design%20portfolio.pdf";
-const COVER_PATH = "/portfolio/design portfolio_jpg.jpg";
+const COVER_PATH = "/portfolio/design portfolio.jpg";
 const VIDEO_PATH = "/portfolio/screen%20recording.mov";
 const VIDEO_COVER = "/portfolio/screen.jpg";
 
