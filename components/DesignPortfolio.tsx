@@ -67,11 +67,11 @@ export default function DesignPortfolio() {
         </div>
 
         {/* Two containers side by side */}
-        <div className="flex flex-col sm:flex-row gap-4 items-start">
+        <div className="flex flex-col sm:flex-row gap-4">
 
           {/* PDF cover */}
           <div
-            className="flex-1"
+            className="flex-1 w-full"
             style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 200ms" }}
           >
             <a
@@ -105,7 +105,7 @@ export default function DesignPortfolio() {
 
           {/* Screen recording — cover image, click to open modal */}
           <div
-            className="flex-1"
+            className="flex-1 w-full"
             style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 350ms" }}
           >
             <button
