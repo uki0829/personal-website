@@ -42,16 +42,13 @@ export default function Navigation() {
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#")) {
-      e.preventDefault();
-      const el = document.querySelector(href);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
       setMenuOpen(false);
     }
   };
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-md border-b border-ink/8 shadow-sm"
+      className="fixed top-0 left-0 right-0 z-50 bg-cream/98 md:bg-cream/95 md:backdrop-blur-md border-b border-ink/8 shadow-sm"
     >
       <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
 

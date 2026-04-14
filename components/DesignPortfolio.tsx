@@ -85,8 +85,8 @@ export default function DesignPortfolio() {
                 alt="Design Portfolio Cover"
                 width={1200}
                 height={800}
+                sizes="(max-width: 640px) 100vw, 50vw"
                 className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                priority
               />
               <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
                 <span
@@ -116,6 +116,7 @@ export default function DesignPortfolio() {
                 alt="Screen Recording Cover"
                 width={1200}
                 height={800}
+                sizes="(max-width: 640px) 100vw, 50vw"
                 className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
               />
               <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/30 transition-colors duration-300 flex items-center justify-center">

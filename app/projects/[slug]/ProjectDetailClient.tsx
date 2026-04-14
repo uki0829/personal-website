@@ -105,7 +105,7 @@ export default function ProjectDetailClient({
       />
 
       {/* Sticky nav */}
-      <nav className="sticky top-0 z-40 bg-cream/90 backdrop-blur-sm border-b border-ink/8">
+      <nav className="sticky top-0 z-40 bg-cream/98 md:bg-cream/90 md:backdrop-blur-sm border-b border-ink/8">
         <div className="max-w-[900px] mx-auto px-6 md:px-12 h-14 flex items-center justify-between">
           <Link
             href="/"
