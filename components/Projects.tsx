@@ -6,9 +6,9 @@ const projects = [
   {
     title: "Parsons Creative Hackathons",
     category: "UI/UX Design",
-    year: "2025",
+    year: "2026",
     summary:
-      "Built an interactive web application in a 46-hour sprint to visualize environmental impacts of global data infrastructure, focusing on user interaction and real-time data visualization. (prototype in the portfolio section)",
+      "Built an interactive web application in a 46-hour sprint to visualize environmental impacts of global data infrastructure, focusing on user interaction and real-time data visualization. (prototype under portfolio section)",
   },
   {
     title: "H-1B Visa Approval Predictive Model",

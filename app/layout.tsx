@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/images/icon.jpg", type: "image/jpeg" }],
-    shortcut: "/images/icon.jpg",
-    apple: "/images/icon.jpg",
+    icon: [{ url: "/favicon-48.png", type: "image/png", sizes: "48x48" }],
+    shortcut: "/favicon-48.png",
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "Hefeng Zhang | Portfolio",
@@ -54,6 +54,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+      </head>
       <body className="text-ink antialiased">
         {children}
       </body>
