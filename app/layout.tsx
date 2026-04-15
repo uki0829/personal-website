@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://hefengzhang.com"),
   title: "Hefeng Zhang | Portfolio",
   description:
-    "Hefeng Zhang — MS Information Science at Cornell. Data analyst bridging human-centered design and data. Specializing in product analytics, ML, and A/B testing.",
+    "Hefeng Zhang — MPS Information Science at Cornell. Data analyst bridging human-centered design and data. Specializing in product analytics, ML, and A/B testing.",
   keywords: [
     "Hefeng Zhang", "Zhang Hefeng", "data analyst", "product analyst", "data scientist",
     "machine learning", "Python", "SQL", "A/B testing", "behavioral analytics", "Cornell", "Parsons",

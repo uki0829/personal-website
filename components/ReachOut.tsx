@@ -48,7 +48,7 @@ export default function ReachOut() {
 
           {/* Short text */}
           <p className="font-body text-ink max-w-md leading-relaxed mb-8" style={{ fontSize: "1rem" }}>
-            I&apos;m open to Jobs, collaborations, and coffee chats.
+            I&apos;m open to jobs, collaborations, and coffee chats.
             Feel free to reach out through any of the channels below.
           </p>
 
