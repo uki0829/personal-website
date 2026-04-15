@@ -10,12 +10,13 @@ const seasons = [
   "/images/winter.jpeg",
 ];
 
-const INTERVAL = 30000; // 30 seconds
-const FADE_DURATION = 3000; // 3s crossfade
+const DESKTOP_INTERVAL = 30000; // 30 seconds
+const MOBILE_INTERVAL = 15000;  // 15 seconds
+const FADE_DURATION = 3000;     // 3s crossfade
 
 export default function BackgroundSlideshow() {
   const [current, setCurrent] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
 
   // Detect screen size in JS — CSS hidden still loads images via <link rel="preload">
   useEffect(() => {
@@ -26,34 +27,21 @@ export default function BackgroundSlideshow() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Only run the timer on desktop
+  // Run the timer on both mobile and desktop, different intervals
   useEffect(() => {
-    if (!isDesktop) return;
+    if (isDesktop === null) return;
+    const interval = isDesktop ? DESKTOP_INTERVAL : MOBILE_INTERVAL;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % seasons.length);
-    }, INTERVAL);
+    }, interval);
     return () => clearInterval(timer);
   }, [isDesktop]);
 
-  // Mobile: static spring image only, no slideshow
-  if (!isDesktop) {
-    return (
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <Image
-          src="/images/spring.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center"
-          quality={55}
-        />
-        <div className="absolute inset-0 bg-cream/90" />
-      </div>
-    );
-  }
+  // Wait for hydration before rendering (avoids SSR mismatch)
+  if (isDesktop === null) return null;
 
-  // Desktop: full crossfading slideshow
-  // Stable keys (key={i}) so React reuses the same element — opacity transition fires correctly
+  // Mobile: crossfading slideshow with lower quality images
+  // Desktop: full quality crossfading slideshow
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
       {seasons.map((src, i) => (
@@ -72,7 +60,7 @@ export default function BackgroundSlideshow() {
             sizes="100vw"
             className="object-cover object-center"
             priority={i === 0}
-            quality={55}
+            quality={isDesktop ? 55 : 30}
           />
         </div>
       ))}
