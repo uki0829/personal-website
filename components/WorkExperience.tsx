@@ -21,8 +21,8 @@ const jobs = [
     tags: ["Python", "SQL", "Excel", "A/B Testing", "Behavioral Analytics"],
   },
   {
-    role: "Sanjin Capital",
-    company: "Data Analyst Intern",
+    company: "Sanjin Capital",
+    role: "Data Analyst Intern",
     companyFull: "Sanjin Capital",
     period: "Jun 2024 – Aug 2024",
     location: "Beijing, China",
@@ -82,9 +82,9 @@ function JobCard({
             className="font-body font-bold text-ink leading-snug"
             style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
           >
-            {job.role}
+            {job.company}
           </h3>
-          <div className="font-body text-sm text-ink mt-0.5">{job.company}</div>
+          <div className="font-body text-sm text-ink mt-0.5">{job.role}</div>
         </div>
 
         {/* Period + location — right-aligned */}
