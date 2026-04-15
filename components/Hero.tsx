@@ -40,7 +40,7 @@ export default function Hero() {
             transition: "opacity 0.8s ease 250ms, transform 0.8s ease 250ms",
           }}
         >
-          Hefeng Zhang<span className="text-rust"></span>
+          Hefeng Zhang<span className="sr-only"> | Portfolio</span>
         </h1>
 
         {/* Statement */}
