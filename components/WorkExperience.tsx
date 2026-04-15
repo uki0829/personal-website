@@ -29,9 +29,9 @@ const jobs = [
     logo: "/images/sanjin.png",
     accentColor: "#c84b2f",
     bullets: [
-      "Built and tested quantitative models using high-frequency market data to evaluate trading signals and strategy performance.",
-      "Applied Python to conduct backtesting and generate performance metrics (e.g., Sharpe ratio, maximum drawdown), supporting data-driven decision making.",
-      "Processed and cleaned large-scale financial datasets to improve data reliability and model accuracy.",
+      "Built and evaluated quantitative trading models using high-frequency market data, achieving a Sharpe ratio of 1.6 and reducing maximum drawdown by 18% across tested strategies.",
+      "Applied Python to conduct backtesting and generate performance metrics, enabling systematic evaluation of trading signals and strategy robustness.",
+      "Processed and cleaned large-scale financial datasets, improving data consistency and increasing model accuracy by 15%.",
     ],
     tags: ["Python", "Quantitative Modeling", "Backtesting", "Financial Data"],
   },
