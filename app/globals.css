@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --cream: #F4F1EB;
+  --cream: #ffffff;
   --ink: #0A0A09;
   --rust: #C84B2F;
-  --dust: #EDE8DF;
+  --dust: #f0f0f0;
   --stone: #7A7670;
   --dark: #1A1918;
   --blue: #3B82F6;

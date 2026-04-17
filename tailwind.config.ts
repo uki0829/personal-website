@@ -19,10 +19,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#F4F1EB",
+        cream: "#ffffff",
         ink: "#0A0A09",
         rust: "#C84B2F",
-        dust: "#EDE8DF",
+        dust: "#f0f0f0",
         stone: "#7A7670",
         "rust-light": "#F0E0DA",
         "cream-dark": "#E8E3D8",
