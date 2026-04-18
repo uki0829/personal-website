@@ -60,7 +60,7 @@ function ProjectCard({
 
       {/* Year — same mono style as Education's period */}
       <div className="mt-8 pt-5 border-t border-ink/6">
-        <span className="font-mono text-xs text-rust tracking-wide">{project.year}</span>
+        <span className="font-mono text-xs font-semibold text-ink tracking-wide">{project.year}</span>
       </div>
     </div>
   );

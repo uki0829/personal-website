@@ -89,10 +89,7 @@ function JobCard({
 
         {/* Period + location — right-aligned */}
         <div className="hidden sm:block text-right flex-shrink-0 ml-2">
-          <div
-            className="font-mono text-xs tracking-wide"
-            style={{ color: job.accentColor }}
-          >
+          <div className="font-mono text-xs font-semibold text-ink tracking-wide">
             {job.period}
           </div>
           <div className="font-mono text-xs text-ink mt-0.5">{job.location}</div>
@@ -101,10 +98,10 @@ function JobCard({
 
       {/* Period visible on mobile */}
       <div className="sm:hidden flex items-center gap-2 mb-4">
-        <span className="font-mono text-xs" style={{ color: job.accentColor }}>
+        <span className="font-mono text-xs font-semibold text-ink">
           {job.period}
         </span>
-        <span className="font-mono text-xs text-stone">· {job.location}</span>
+        <span className="font-mono text-xs text-ink">· {job.location}</span>
       </div>
 
       {/* Divider */}

@@ -69,7 +69,7 @@ function EduCard({
               {edu.institution}
             </a>
             <div className="hidden sm:block text-right flex-shrink-0">
-              <div className="font-mono text-xs text-rust tracking-wide">{edu.period}</div>
+              <div className="font-mono text-xs font-semibold text-ink tracking-wide">{edu.period}</div>
               <div className="font-mono text-xs text-ink mt-0.5">{edu.location}</div>
             </div>
           </div>
@@ -78,7 +78,7 @@ function EduCard({
           <div className="font-body text-sm text-ink leading-snug mb-1">{edu.degree}</div>
 
           {/* Period — mobile only */}
-          <div className="sm:hidden font-mono text-xs text-rust tracking-wide mb-3">
+          <div className="sm:hidden font-mono text-xs font-semibold text-ink tracking-wide mb-3">
             {edu.period} · {edu.location}
           </div>
 
