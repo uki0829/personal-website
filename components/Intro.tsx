@@ -60,7 +60,7 @@ export default function Intro() {
               I'm Hefeng Zhang. My work focuses on bridging human-centered design with data analysis. I am currently pursuing a master’s degree in Information Science @ Cornell University, and I earned my bachelor’s degree in Interior Design from Parsons School of Design.
             </p>
             <p>
-              I span my practice between visual UI/UX design and data analytics. I like to use machine learning models to solve complex patterns and visualize data to create solutions for real world problems.
+              I position myself at the intersection of product management and data analytics, using machine learning models to identify complex patterns and transform data into practical product solutions for real world applications. 
             </p>
             <p>
               In my spare time, I enjoy spending time with my cat and going on small hiking trips while catching the sunset.
