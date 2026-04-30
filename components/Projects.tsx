@@ -17,6 +17,13 @@ const projects = [
     summary:
       "Developed a machine learning model using 1M+ historical visa records to predict approval probability and identify key decision factors, leveraging Pandas, PyTorch, and Scikit-learn.",
   },
+  {
+    title: "Smart Self-Watering Planter",
+    category: "Product Design",
+    year: "2025",
+    summary:
+      "Developed an IoT smart planter using Random Forest and XGBoost algorithms to predict optimal watering schedules from real-time humidity and temperature sensor data for different plant types, achieving 90%+ prediction accuracy.",
+  },
 ];
 
 /* ── Project card ────────────────────────────────────────────────── */

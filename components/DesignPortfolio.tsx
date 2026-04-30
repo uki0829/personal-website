@@ -7,11 +7,16 @@ const PDF_PATH = "/portfolio/design%20portfolio.pdf";
 const COVER_PATH = "/portfolio/design portfolio.jpg";
 const VIDEO_PATH = "/portfolio/screen%20recording.mov";
 const VIDEO_COVER = "/portfolio/screen.jpg";
+const PLANTER_COVER = "/portfolio/smart planter project.jpeg";
+const PLANTER_PDF = "/portfolio/smart%20planter%20project.pdf";
 
 export default function DesignPortfolio() {
   const ref = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
+  const [index, setIndex] = useState(0); // 0 = cards 0-1 visible, 1 = cards 1-2 visible
+  const [cardPx, setCardPx] = useState(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,6 +32,24 @@ export default function DesignPortfolio() {
     if (videoOpen) document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [videoOpen]);
+
+  // Track viewport width to compute exact pixel offset per card
+  useEffect(() => {
+    const update = () => {
+      if (viewportRef.current) {
+        setCardPx((viewportRef.current.clientWidth - 16) / 2);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const goPrev = () => setIndex(i => Math.max(0, i - 1));
+  const goNext = () => setIndex(i => Math.min(1, i + 1));
+
+  // Each slide step = one card width + gap
+  const trackOffset = index * (cardPx + 16);
 
   return (
     <section id="design" className="py-24 px-6 border-t border-ink/8 bg-dust/50" ref={ref}>
@@ -66,75 +89,141 @@ export default function DesignPortfolio() {
           </div>
         </div>
 
-        {/* Two containers side by side */}
-        <div className="flex flex-col sm:flex-row gap-4">
-
-          {/* PDF cover */}
-          <div
-            className="flex-1 w-full"
-            style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 200ms" }}
+        {/*
+          Carousel wrapper expands 48px beyond the card area on each side
+          so arrows sit in that gutter without overlapping any card.
+          The viewport (overflow-hidden) is inset by the same amount.
+        */}
+        <div
+          className="relative -mx-12 group"
+          style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 100ms" }}
+        >
+          {/* Left arrow — invisible until section hover, no background ever */}
+          <button
+            onClick={goPrev}
+            className="absolute left-0 top-[45%] -translate-y-1/2 z-10 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-ink/40 hover:text-ink/80"
+            aria-label="Previous"
           >
-            <a
-              href={PDF_PATH}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block relative border border-ink/10 overflow-hidden"
-            >
-              <div className="relative aspect-[5/3]">
-                <Image
-                  src={COVER_PATH}
-                  alt="Design Portfolio Cover"
-                  fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-              <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
-                <span
-                  className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ letterSpacing: "0.1em" }}
-                >
-                  View Portfolio
-                </span>
-              </div>
-            </a>
-            <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
-              Click to open the full portfolio PDF.
-            </p>
-          </div>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
 
-          {/* Screen recording — cover image, click to open modal */}
-          <div
-            className="flex-1 w-full"
-            style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 350ms" }}
+          {/* Right arrow — invisible until section hover, no background ever */}
+          <button
+            onClick={goNext}
+            className="absolute right-0 top-[45%] -translate-y-1/2 z-10 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-ink/40 hover:text-ink/80"
+            aria-label="Next"
           >
-            <button
-              onClick={() => setVideoOpen(true)}
-              className="group relative w-full border border-ink/10 overflow-hidden block"
-            >
-              <div className="relative aspect-[5/3]">
-                <Image
-                  src={VIDEO_COVER}
-                  alt="Screen Recording Cover"
-                  fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-              <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
-                <span
-                  className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ letterSpacing: "0.1em" }}
-                >
-                  Watch Video
-                </span>
-              </div>
-            </button>
-            <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
-              Click to watch the project walkthrough.
-            </p>
-          </div>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
 
+          {/* Viewport — clips the overflowing third card */}
+          <div ref={viewportRef} className="overflow-hidden mx-12">
+            {/* Track — slides via transform, no scrollbar involved */}
+            <div
+              className="flex gap-4"
+              style={{
+                transform: `translateX(-${trackOffset}px)`,
+                transition: "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            >
+
+              {/* Card 1 — Design PDF */}
+              <div className="flex-none w-[calc(50%-8px)]">
+                <a
+                  href={PDF_PATH}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/card block relative border border-ink/10 overflow-hidden"
+                >
+                  <div className="relative aspect-[5/3]">
+                    <Image
+                      src={COVER_PATH}
+                      alt="Design Portfolio Cover"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                      className="object-cover transition-transform duration-500 group-hover/card:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-ink/0 group-hover/card:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
+                    <span
+                      className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      View Portfolio
+                    </span>
+                  </div>
+                </a>
+                <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
+                  Click to open the full portfolio PDF.
+                </p>
+              </div>
+
+              {/* Card 2 — Screen recording */}
+              <div className="flex-none w-[calc(50%-8px)]">
+                <button
+                  onClick={() => setVideoOpen(true)}
+                  className="group/card relative w-full border border-ink/10 overflow-hidden block"
+                >
+                  <div className="relative aspect-[5/3]">
+                    <Image
+                      src={VIDEO_COVER}
+                      alt="Screen Recording Cover"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                      className="object-cover transition-transform duration-500 group-hover/card:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-ink/0 group-hover/card:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
+                    <span
+                      className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      Watch Video
+                    </span>
+                  </div>
+                </button>
+                <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
+                  Click to watch the project walkthrough.
+                </p>
+              </div>
+
+              {/* Card 3 — Smart Planter */}
+              <div className="flex-none w-[calc(50%-8px)]">
+                <a
+                  href={PLANTER_PDF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/card block relative border border-ink/10 overflow-hidden"
+                >
+                  <div className="relative aspect-[5/3]">
+                    <Image
+                      src={PLANTER_COVER}
+                      alt="Smart Planter Project"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                      className="object-cover transition-transform duration-500 group-hover/card:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-ink/0 group-hover/card:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
+                    <span
+                      className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      View Project
+                    </span>
+                  </div>
+                </a>
+                <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
+                  Click to open the Smart Planter project PDF.
+                </p>
+              </div>
+
+            </div>
+          </div>
         </div>
 
         {/* Video modal */}
