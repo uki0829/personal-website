@@ -10,13 +10,16 @@ const VIDEO_COVER = "/portfolio/screen.jpg";
 const PLANTER_COVER = "/portfolio/smart planter project.jpeg";
 const PLANTER_PDF = "/portfolio/smart%20planter%20project.pdf";
 
+const TOTAL_CARDS = 3;
+
 export default function DesignPortfolio() {
   const ref = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
-  const [index, setIndex] = useState(0); // 0 = cards 0-1 visible, 1 = cards 1-2 visible
+  const [index, setIndex] = useState(0);
   const [cardPx, setCardPx] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(1);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,12 +36,19 @@ export default function DesignPortfolio() {
     return () => document.removeEventListener("keydown", onKey);
   }, [videoOpen]);
 
-  // Track viewport width to compute exact pixel offset per card
   useEffect(() => {
     const update = () => {
-      if (viewportRef.current) {
-        setCardPx((viewportRef.current.clientWidth - 16) / 2);
+      if (!viewportRef.current) return;
+      const w = viewportRef.current.clientWidth;
+      const isMobile = window.innerWidth < 640;
+      if (isMobile) {
+        setCardPx(w);
+        setMaxIndex(TOTAL_CARDS - 1); // 1 card visible at a time
+      } else {
+        setCardPx((w - 16) / 2);
+        setMaxIndex(TOTAL_CARDS - 2); // 2 cards visible at a time
       }
+      setIndex(0); // reset on resize to avoid out-of-range
     };
     update();
     window.addEventListener("resize", update);
@@ -46,9 +56,8 @@ export default function DesignPortfolio() {
   }, []);
 
   const goPrev = () => setIndex(i => Math.max(0, i - 1));
-  const goNext = () => setIndex(i => Math.min(1, i + 1));
+  const goNext = () => setIndex(i => Math.min(maxIndex, i + 1));
 
-  // Each slide step = one card width + gap
   const trackOffset = index * (cardPx + 16);
 
   return (
@@ -65,12 +74,17 @@ export default function DesignPortfolio() {
           }}
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-            <h2
-              className="font-display font-bold text-ink"
-              style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "-0.03em", lineHeight: "1" }}
-            >
-              Design
-            </h2>
+            <div>
+              <h2
+                className="font-display font-bold text-ink"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "-0.03em", lineHeight: "1" }}
+              >
+                Design
+              </h2>
+              <p className="sm:hidden font-mono text-[10px] text-stone/50 tracking-widest uppercase mt-2" style={{ letterSpacing: "0.08em" }}>
+                click to scroll
+              </p>
+            </div>
             <div className="flex items-center gap-3 flex-shrink-0">
               <a
                 href={PDF_PATH}
@@ -89,40 +103,36 @@ export default function DesignPortfolio() {
           </div>
         </div>
 
-        {/*
-          Carousel wrapper expands 48px beyond the card area on each side
-          so arrows sit in that gutter without overlapping any card.
-          The viewport (overflow-hidden) is inset by the same amount.
-        */}
+        {/* Carousel — 1 card on mobile, 2 on desktop */}
         <div
-          className="relative -mx-12 group"
+          className="relative -mx-4 sm:-mx-12 group"
           style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 100ms" }}
         >
-          {/* Left arrow — invisible until section hover, no background ever */}
+          {/* Left arrow */}
           <button
             onClick={goPrev}
-            className="absolute left-0 top-[45%] -translate-y-1/2 z-10 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-ink/40 hover:text-ink/80"
+            className="absolute left-0 top-[45%] -translate-y-1/2 z-10 p-2 sm:p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-ink/40 hover:text-ink/80"
             aria-label="Previous"
           >
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" className="sm:w-8 sm:h-8">
               <polyline points="15 18 9 12 15 6" />
             </svg>
           </button>
 
-          {/* Right arrow — invisible until section hover, no background ever */}
+          {/* Right arrow */}
           <button
             onClick={goNext}
-            className="absolute right-0 top-[45%] -translate-y-1/2 z-10 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-ink/40 hover:text-ink/80"
+            className="absolute right-0 top-[45%] -translate-y-1/2 z-10 p-2 sm:p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-ink/40 hover:text-ink/80"
             aria-label="Next"
           >
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" className="sm:w-8 sm:h-8">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </button>
 
-          {/* Viewport — clips the overflowing third card */}
-          <div ref={viewportRef} className="overflow-hidden mx-12">
-            {/* Track — slides via transform, no scrollbar involved */}
+          {/* Viewport */}
+          <div ref={viewportRef} className="overflow-hidden mx-4 sm:mx-12">
+            {/* Track */}
             <div
               className="flex gap-4"
               style={{
@@ -132,7 +142,7 @@ export default function DesignPortfolio() {
             >
 
               {/* Card 1 — Design PDF */}
-              <div className="flex-none w-[calc(50%-8px)]">
+              <div className="flex-none w-full sm:w-[calc(50%-8px)]">
                 <a
                   href={PDF_PATH}
                   target="_blank"
@@ -163,7 +173,7 @@ export default function DesignPortfolio() {
               </div>
 
               {/* Card 2 — Screen recording */}
-              <div className="flex-none w-[calc(50%-8px)]">
+              <div className="flex-none w-full sm:w-[calc(50%-8px)]">
                 <button
                   onClick={() => setVideoOpen(true)}
                   className="group/card relative w-full border border-ink/10 overflow-hidden block"
@@ -192,7 +202,7 @@ export default function DesignPortfolio() {
               </div>
 
               {/* Card 3 — Smart Planter */}
-              <div className="flex-none w-[calc(50%-8px)]">
+              <div className="flex-none w-full sm:w-[calc(50%-8px)]">
                 <a
                   href={PLANTER_PDF}
                   target="_blank"
@@ -222,6 +232,21 @@ export default function DesignPortfolio() {
                 </p>
               </div>
 
+            </div>
+          </div>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center mt-5">
+            <div className="flex gap-2">
+            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className="w-1.5 h-1.5 rounded-full transition-colors duration-300"
+                style={{ background: i === index ? "var(--color-ink)" : "var(--color-ink)", opacity: i === index ? 0.7 : 0.2 }}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
             </div>
           </div>
         </div>
