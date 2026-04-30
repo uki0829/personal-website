@@ -15,8 +15,8 @@ const jobs = [
     bullets: [
       "Led A/B testing and user intent analysis using behavioral data for search interface iterations, increasing click-through rate (CTR) by 12% and supporting data-driven decisions.",
       "Analyzed user behavior and sales data using SQL, Excel, and Python to identify optimization opportunities across search and recommendation features.",
-      "Worked with product, engineering, and business teams to translate analytical findings into measurable improvements.",
-      "Supported experimentation design and evaluated algorithm performance to improve feature effectiveness and user engagement.",
+      "Collaborated with product, engineering, and business teams to convert data insights into model-driven feature improvements and measurable product outcomes.",
+      "Built SQL/Python pipelines to track daily feature performance (CTR, conversion, retention), reducing manual analysis time by 30%.",
     ],
     tags: ["Python", "SQL", "Excel", "A/B Testing", "Behavioral Analytics"],
   },
@@ -29,9 +29,9 @@ const jobs = [
     logo: "/images/sanjin.png",
     accentColor: "#c84b2f",
     bullets: [
-      "Built and evaluated quantitative trading models using high-frequency market data, achieving a Sharpe ratio of 1.6 and reducing maximum drawdown by 18% across tested strategies.",
-      "Applied Python to conduct backtesting and generate performance metrics, enabling systematic evaluation of trading signals and strategy robustness.",
-      "Processed and cleaned large-scale financial datasets, improving data consistency and increasing model accuracy by 15%.",
+      "Built and evaluated classification models on 1M+ high-frequency market data points to predict trading signals, improving signal precision and consistency across backtesting scenarios.",
+      "Developed Python-based backtesting pipelines to simulate strategy performance, increasing Sharpe ratio by 15% while monitoring risk metrics including maximum drawdown and volatility.",
+      "Processed and standardized large-scale financial datasets, reducing missing and noisy data by 20% and engineering time-series features to improve model accuracy and robustness",
     ],
     tags: ["Python", "Quantitative Modeling", "Backtesting", "Financial Data"],
   },
