@@ -9,6 +9,7 @@ const projects = [
     year: "2026",
     summary:
       "Developed an interactive data visualization web interface processing structured JSON data from 1.5K data centers, enabling exploration of global data infrastructure patterns and associated energy usage. (prototype under portfolio section)",
+    link: "https://ai-infrastructure-story.vercel.app/"
   },
   {
     title: "H-1B Visa Approval Predictive Model",
@@ -16,6 +17,7 @@ const projects = [
     year: "2024",
     summary:
       "Developed a machine learning model using 1M+ historical visa records to predict approval probability and identify key decision factors, leveraging Pandas, PyTorch, and Scikit-learn.",
+    link: "https://github.com/uki0829/H1B-Application-Predictions"
   },
   {
     title: "Smart Self-Watering Planter",
@@ -51,7 +53,18 @@ function ProjectCard({
           className="font-body font-bold text-ink leading-snug mb-1"
           style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
         >
-          {project.title}
+          {"link" in project && project.link ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline underline-offset-2"
+            >
+              {project.title}
+            </a>
+          ) : (
+            project.title
+          )}
         </div>
 
         {/* Category — same style as Education's degree line */}
