@@ -31,11 +31,11 @@ export default function Intro() {
         >
           <div className="relative w-60 aspect-[4/5] overflow-hidden rounded-2xl border border-ink/10">
             <Image
-              src="/images/profile.jpeg"
+              src="/images/profile_wide.JPG"
               alt="Hefeng Zhang"
               fill
               className="object-cover"
-              sizes="240px"
+              sizes="2560px"
               priority
             />
           </div>
