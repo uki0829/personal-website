@@ -5,6 +5,21 @@ import { useEffect, useRef, useState } from "react";
 
 const jobs = [
   {
+    company: "Lenovo",
+    role: "AI Engineer Intern",
+    companyFull: "Lenovo Group Limited",
+    period: "Jun 2026 – Aug 2026",
+    location: "Beijing, China",
+    logo: "/images/lenovo.jpeg",
+    accentColor: "#c84b2f",
+    bullets: [
+      "Delivered a client-facing YOLO/OpenCV inventory-monitoring workflow, translating operational needs into a working solution that detected stocked and empty shelf spaces with 90% accuracy across 10k images and videos.",
+      "Built an agentic RAG workflow in Python that retrieved relevant customer procedures and FAQs from a vector database, combined the retrieved context with VLM detections, and generated grounded incident summaries and recommended actions.",
+      "Designed a cloud service platform integrating a custom-trained RF-DETR model with a vision-language model (VLM) to detect and verify Nürburgring race-car numbers across more than 3k video clips.",
+    ],
+    tags: ["Python", "YOLO", "OpenCV", "Agentic RAG", "RF-DETR", "VLM"],
+  },
+  {
     company: "Hanshow Technology",
     role: "Product Data Analyst Intern",
     companyFull: "Hanshow Technology",
