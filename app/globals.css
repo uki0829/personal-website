@@ -167,3 +167,74 @@ body {
   pointer-events: none;
   transition: opacity 0.15s ease;
 }
+
+/* The deck stays mounted so selecting a project animates from its current position. */
+.project-stage {
+  position: relative;
+  min-height: 570px;
+  margin-top: 36px;
+}
+.project-deck {
+  position: absolute;
+  top: 45px;
+  left: calc(50% - 185px);
+  width: 280px;
+  height: 395px;
+  transition: left 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.is-open .project-deck { left: calc(75% - 160px); }
+.project-playing-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 14px 20px;
+  border: 1px solid #bdb9b2;
+  border-radius: 18px;
+  background: #faf8f3;
+  color: var(--ink);
+  text-align: left;
+  box-shadow: 0 3px 5px #00000012, 0 16px 28px #0000000d;
+  transform-origin: 50% 85%;
+  transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 250ms;
+  cursor: pointer;
+}
+.project-playing-card:hover { box-shadow: 0 4px 8px #00000018, 0 20px 35px #00000018; }
+.project-playing-card:focus-visible { outline: 3px solid var(--rust); outline-offset: 5px; z-index: 10 !important; }
+.project-cover {
+  height: 230px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #0000000d;
+}
+.project-description {
+  width: 43%;
+  padding-top: 80px;
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 450ms ease 150ms, transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.is-open .project-description { opacity: 1; transform: translateX(0); }
+.project-copy { animation: projectCopyIn 450ms ease both; }
+@keyframes projectCopyIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 900px) {
+  .project-stage { min-height: 510px; }
+  .project-deck { width: 230px; height: 350px; left: calc(50% - 155px); transform: scale(0.82); transform-origin: center top; }
+  .project-cover { height: 185px; }
+  .project-playing-card h3 { font-size: 21px; }
+  .is-open .project-deck { left: calc(50% - 155px); }
+  .project-description { width: 100%; padding-top: 440px; }
+  .is-open { padding-bottom: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-deck, .project-playing-card, .project-description { transition: none; }
+  .project-copy { animation: none; }
+}
+@media (max-width: 360px) {
+  .project-deck { transform: scale(0.72); }
+  .project-playing-card h3 { font-size: 20px; }
+}

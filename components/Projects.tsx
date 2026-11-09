@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { BookOpen, Globe, ChartNoAxesCombined, Sprout } from "lucide-react";
 
 const projects = [
+  {
+    title: "Lecture Lab: Smart Study Classroom",
+    link: "https://github.com/uki0829/Lec_to_quiz",
+    category: "AI Product Design",
+    year: "2026",
+    summary:
+      "Designed a web app that turns student-uploaded PDF lecture materials into interactive quizzes. Used retrieval-augmented generation (RAG) to ground study content in course materials and support personalized study paths for each student.",
+  },
   {
     title: "Parsons Creative Hackathons",
     category: "UI/UX Design",
@@ -28,105 +37,67 @@ const projects = [
   },
 ];
 
-/* ── Project card ────────────────────────────────────────────────── */
-function ProjectCard({
-  project,
-  index,
-  visible,
-}: {
-  project: (typeof projects)[0];
-  index: number;
-  visible: boolean;
-}) {
-  return (
-    <div
-      className="flex-1 bg-cream border border-ink/8 p-8 md:p-10 flex flex-col justify-between hover:border-ink/20 transition-colors duration-300"
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(16px)",
-        transition: `opacity 0.6s ease ${index * 150 + 150}ms, transform 0.6s ease ${index * 150 + 150}ms`,
-      }}
-    >
-      <div className="flex-1">
-        {/* Title */}
-        <div
-          className="font-body font-bold text-ink leading-snug mb-1"
-          style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
-        >
-          {"link" in project && project.link ? (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline underline-offset-2"
-            >
-              {project.title}
-            </a>
-          ) : (
-            project.title
-          )}
-        </div>
+const covers = [BookOpen, Globe, ChartNoAxesCombined, Sprout];
+const colors = ["#dce6ee", "#e8dfd3", "#dddfe9", "#dce5d6"];
 
-        {/* Category — same style as Education's degree line */}
-        <div className="font-body text-sm text-ink leading-snug mb-4">
-          {project.category}
-        </div>
-
-        {/* Summary — same style as Education's detail line */}
-        <p className="font-body text-sm text-ink leading-relaxed">
-          {project.summary}
-        </p>
-      </div>
-
-      {/* Year — same mono style as Education's period */}
-      <div className="mt-8 pt-5 border-t border-ink/6">
-        <span className="font-mono text-xs font-semibold text-ink tracking-wide">{project.year}</span>
-      </div>
-    </div>
-  );
-}
-
-/* ── Section ─────────────────────────────────────────────────────── */
 export default function Projects() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { setVisible(true); observer.disconnect(); }
-      },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+  const [selected, setSelected] = useState<number | null>(null);
+  const front = selected ?? 0;
+  const project = selected === null ? null : projects[selected];
 
   return (
-    <section id="projects" className="py-24 px-6" ref={ref}>
+    <section id="projects" className="py-24 px-6">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div
-          className="mb-10"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(16px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-          }}
-        >
-          <h2
-            className="font-display font-bold text-ink"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "-0.03em", lineHeight: "1" }}
-          >
-            Projects
-          </h2>
-        </div>
+        <h2 className="font-display font-bold text-ink" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", letterSpacing: "-0.03em", lineHeight: 1 }}>
+          Projects
+        </h2>
+        <p className="font-body text-sm text-stone mt-4">Pick a card to explore a project.</p>
 
-        {/* Two boxes side by side */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} visible={visible} />
-          ))}
+        <div className={`project-stage ${project ? "is-open" : ""}`}>
+          <div className="project-description" aria-hidden={!project}>
+            {project && (
+              <article key={project.title} className="project-copy" aria-live="polite">
+                <p className="font-mono text-xs text-stone mb-4">{project.category} · {project.year}</p>
+                <h3 id="project-detail-title" className="font-display text-3xl md:text-4xl font-bold leading-tight mb-6">{project.title}</h3>
+                <p className="font-body text-base leading-relaxed text-ink">{project.summary}</p>
+                {"link" in project && project.link && (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-block mt-6 font-body text-sm underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">View project ↗</a>
+                )}
+                <button type="button" onClick={() => setSelected(null)} className="block mt-8 font-body text-sm text-stone underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">Back to deck</button>
+              </article>
+            )}
+          </div>
+
+          <div className="project-deck" role="group" aria-label="Choose a project">
+            {projects.map((item, index) => {
+              const Cover = covers[index];
+              const position = (index - front + projects.length) % projects.length;
+              return (
+                <button
+                  key={item.title}
+                  type="button"
+                  className="project-playing-card"
+                  aria-label={`Read about ${item.title}`}
+                  aria-pressed={selected === index}
+                  onClick={() => setSelected(index)}
+                  style={{
+                    zIndex: projects.length - position,
+                    transform: `translate(${position * 30}px, ${position * 13}px) rotate(${position * 5 - 7}deg)`,
+                  }}
+                >
+                  <div className="project-cover" style={{ backgroundColor: colors[index] }}>
+                    <Cover size={86} strokeWidth={1.5} aria-hidden="true" />
+                  </div>
+                  <div className="px-1 pt-5 flex flex-col flex-1">
+                    <h3 className="font-display text-2xl font-bold leading-tight">{item.title}</h3>
+                    <div className="flex justify-between items-center mt-auto pt-5 font-mono text-xs text-stone">
+                      <span>{item.year}</span><span aria-hidden="true">Explore ↗</span>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

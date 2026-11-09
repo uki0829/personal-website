@@ -5,6 +5,21 @@ import { useEffect, useRef, useState } from "react";
 
 const jobs = [
   {
+    company: "Google | Capstone project",
+    role: "Product Manager",
+    companyFull: "Google | Cornell University Capstone Project",
+    period: "Fall 2026",
+    location: "Ithaca, NY",
+    logo: "/images/Google_Favicon_2025.png",
+    accentColor: "#c84b2f",
+    bullets: [
+      "Developed a Python toolkit spanning 10 causal inference methods, reducing the time required for the client to produce causal inference results by 60% and supporting evidence-based evaluation of business outcomes.",
+      "Built a method recommendation system into the package to help users navigate available causal inference methods and select an appropriate approach for their analysis.",
+      "Building synthetic datasets with known treatment effects to benchmark method accuracy, alongside structured documentation and API guidance to support users and agentic AI workflows.",
+    ],
+    tags: ["Python", "Causal Inference", "Method Recommendation", "AI Evaluation"],
+  },
+  {
     company: "Lenovo",
     role: "AI Engineer Intern",
     companyFull: "Lenovo Group Limited",
