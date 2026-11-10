@@ -211,6 +211,21 @@ body {
   overflow: hidden;
   border: 1px solid #0000000d;
 }
+.project-cover-backdrop {
+  object-fit: cover;
+  filter: blur(20px);
+  transform: scale(1.2);
+  opacity: 0.7;
+}
+.project-cover-image {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+}
 .project-description {
   width: 43%;
   padding-top: 80px;

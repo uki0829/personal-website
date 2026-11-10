@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Globe, ChartNoAxesCombined, Sprout } from "lucide-react";
+import Image from "next/image";
+import { ChartNoAxesCombined } from "lucide-react";
+import lectureLabImage from "@/public/portfolio/lec to quiz.png";
+import hackathonImage from "@/public/portfolio/screen.jpg";
+import planterImage from "@/public/portfolio/smart planter project.jpeg";
 
 const projects = [
   {
     title: "Lecture Lab: Smart Study Classroom",
+    image: lectureLabImage,
     link: "https://github.com/uki0829/Lec_to_quiz",
     category: "AI Product Design",
     year: "2026",
@@ -14,6 +19,7 @@ const projects = [
   },
   {
     title: "Parsons Creative Hackathons",
+    image: hackathonImage,
     category: "UI/UX Design",
     year: "2026",
     summary:
@@ -30,6 +36,7 @@ const projects = [
   },
   {
     title: "Smart Self-Watering Planter",
+    image: planterImage,
     category: "Product Design",
     year: "2025",
     summary:
@@ -37,8 +44,7 @@ const projects = [
   },
 ];
 
-const covers = [BookOpen, Globe, ChartNoAxesCombined, Sprout];
-const colors = ["#dce6ee", "#e8dfd3", "#dddfe9", "#dce5d6"];
+const colors = ["#171e2b", "#151019", "#dddfe9", "#b49b7d"];
 
 export default function Projects() {
   const [selected, setSelected] = useState<number | null>(null);
@@ -70,7 +76,6 @@ export default function Projects() {
 
           <div className="project-deck" role="group" aria-label="Choose a project">
             {projects.map((item, index) => {
-              const Cover = covers[index];
               const position = (index - front + projects.length) % projects.length;
               return (
                 <button
@@ -86,7 +91,14 @@ export default function Projects() {
                   }}
                 >
                   <div className="project-cover" style={{ backgroundColor: colors[index] }}>
-                    <Cover size={86} strokeWidth={1.5} aria-hidden="true" />
+                    {"image" in item && item.image ? (
+                      <>
+                        <Image src={item.image} alt="" fill sizes="250px" className="project-cover-backdrop" aria-hidden="true" />
+                        <Image src={item.image} alt={`${item.title} preview`} sizes="250px" className="project-cover-image" />
+                      </>
+                    ) : (
+                      <ChartNoAxesCombined size={86} strokeWidth={1.5} aria-hidden="true" />
+                    )}
                   </div>
                   <div className="px-1 pt-5 flex flex-col flex-1">
                     <h3 className="font-display text-2xl font-bold leading-tight">{item.title}</h3>

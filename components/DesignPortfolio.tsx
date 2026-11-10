@@ -10,13 +10,15 @@ const VIDEO_COVER = "/portfolio/screen.jpg";
 const PLANTER_COVER = "/portfolio/smart planter project.jpeg";
 const PLANTER_PDF = "/portfolio/smart%20planter%20project.pdf";
 
-const TOTAL_CARDS = 3;
+const TIKTOK_VIDEO = "/portfolio/tiktok-assessment-app.mp4";
+
+const TOTAL_CARDS = 4;
 
 export default function DesignPortfolio() {
   const ref = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [videoOpen, setVideoOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState<string | null>(null);
   const [index, setIndex] = useState(0);
   const [cardPx, setCardPx] = useState(0);
   const [maxIndex, setMaxIndex] = useState(1);
@@ -31,7 +33,7 @@ export default function DesignPortfolio() {
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setVideoOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setVideoOpen(null); };
     if (videoOpen) document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [videoOpen]);
@@ -141,7 +143,66 @@ export default function DesignPortfolio() {
               }}
             >
 
-              {/* Card 1 — Design PDF */}
+              {/* Card 1 — TikTok assessment */}
+              <div className="flex-none w-full sm:w-[calc(50%-8px)]">
+                <button
+                  onClick={() => setVideoOpen(TIKTOK_VIDEO)}
+                  aria-label="Watch TikTok assessment"
+                  className="group/card relative w-full border border-ink/10 overflow-hidden block"
+                >
+                  <div className="relative aspect-[5/3] bg-ink">
+                    <Image
+                      src="/portfolio/lec to quiz.png"
+                      alt="Lecture Lab app preview"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                      className="object-contain transition-transform duration-500 group-hover/card:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-ink/0 group-hover/card:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
+                    <span
+                      className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      Watch Video
+                    </span>
+                  </div>
+                </button>
+                <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
+                  TikTok Assessment · Watch the project presentation.
+                </p>
+              </div>
+
+              {/* Card 2 — Screen recording */}
+              <div className="flex-none w-full sm:w-[calc(50%-8px)]">
+                <button
+                  onClick={() => setVideoOpen(VIDEO_PATH)}
+                  className="group/card relative w-full border border-ink/10 overflow-hidden block"
+                >
+                  <div className="relative aspect-[5/3]">
+                    <Image
+                      src={VIDEO_COVER}
+                      alt="The Invisible Occupants"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 40vw"
+                      className="object-cover transition-transform duration-500 group-hover/card:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-ink/0 group-hover/card:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
+                    <span
+                      className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
+                      style={{ letterSpacing: "0.1em" }}
+                    >
+                      Watch Video
+                    </span>
+                  </div>
+                </button>
+                <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
+                  The Invisible Occupants · Watch the project walkthrough.
+                </p>
+              </div>
+
+              {/* Card 3 — Design PDF */}
               <div className="flex-none w-full sm:w-[calc(50%-8px)]">
                 <a
                   href={PDF_PATH}
@@ -172,36 +233,7 @@ export default function DesignPortfolio() {
                 </p>
               </div>
 
-              {/* Card 2 — Screen recording */}
-              <div className="flex-none w-full sm:w-[calc(50%-8px)]">
-                <button
-                  onClick={() => setVideoOpen(true)}
-                  className="group/card relative w-full border border-ink/10 overflow-hidden block"
-                >
-                  <div className="relative aspect-[5/3]">
-                    <Image
-                      src={VIDEO_COVER}
-                      alt="Screen Recording Cover"
-                      fill
-                      sizes="(max-width: 640px) 100vw, 40vw"
-                      className="object-cover transition-transform duration-500 group-hover/card:scale-[1.02]"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-ink/0 group-hover/card:bg-ink/30 transition-colors duration-300 flex items-center justify-center">
-                    <span
-                      className="font-mono text-xs text-cream tracking-widest uppercase px-5 py-2.5 border border-cream opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
-                      style={{ letterSpacing: "0.1em" }}
-                    >
-                      Watch Video
-                    </span>
-                  </div>
-                </button>
-                <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
-                  Click to watch the project walkthrough.
-                </p>
-              </div>
-
-              {/* Card 3 — Smart Planter */}
+              {/* Card 4 — Smart Planter */}
               <div className="flex-none w-full sm:w-[calc(50%-8px)]">
                 <a
                   href={PLANTER_PDF}
@@ -255,21 +287,21 @@ export default function DesignPortfolio() {
         {videoOpen && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-ink/85 backdrop-blur-sm"
-            onClick={() => setVideoOpen(false)}
+            onClick={() => setVideoOpen(null)}
           >
             <div
               className="relative w-full max-w-4xl mx-6"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                onClick={() => setVideoOpen(false)}
+                onClick={() => setVideoOpen(null)}
                 className="absolute -top-9 right-0 font-mono text-xs text-cream/60 hover:text-cream tracking-widest uppercase transition-colors duration-200"
                 style={{ letterSpacing: "0.08em" }}
               >
                 ESC · Close
               </button>
               <video
-                src={VIDEO_PATH}
+                src={videoOpen}
                 controls
                 autoPlay
                 playsInline
