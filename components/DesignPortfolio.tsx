@@ -147,7 +147,7 @@ export default function DesignPortfolio() {
               <div className="flex-none w-full sm:w-[calc(50%-8px)]">
                 <button
                   onClick={() => setVideoOpen(TIKTOK_VIDEO)}
-                  aria-label="Watch TikTok assessment"
+                  aria-label="Watch Lecture Lab"
                   className="group/card relative w-full border border-ink/10 overflow-hidden block"
                 >
                   <div className="relative aspect-[5/3] bg-ink">
@@ -169,7 +169,7 @@ export default function DesignPortfolio() {
                   </div>
                 </button>
                 <p className="font-mono text-xs text-stone mt-3" style={{ opacity: 0.6 }}>
-                  TikTok Assessment · Watch the project presentation.
+                  Lecture Lab · Watch the project presentation.
                 </p>
               </div>
 
